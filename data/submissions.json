@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "assignmentId": 1,
+    "studentId": "student1",
+    "submissionText": "I have completed the database design for the library management system. The ER diagram includes entities for Books, Members, Authors, and Transactions. I have normalized the database to 3NF and created all necessary SQL queries for CRUD operations.",
+    "filePaths": [],
+    "comments": "Please find the attached files with complete documentation.",
+    "submittedAt": "2025-01-05T10:30:00.000Z",
+    "grade": null,
+    "feedback": null,
+    "gradedAt": null
+  },
+  {
+    "id": 2,
+    "assignmentId": 3,
+    "studentId": "student2",
+    "submissionText": null,
+    "filePaths": [],
+    "comments": "Implemented all three sorting algorithms with performance comparison charts.",
+    "submittedAt": "2025-01-08T15:45:00.000Z",
+    "grade": null,
+    "feedback": null,
+    "gradedAt": null
+  },
+  {
+    "id": 3,
+    "assignmentId": 1,
+    "studentId": "student3",
+    "submissionText": "My library management database includes advanced features like reservation system and fine calculations. The schema supports multiple authors per book and tracks borrowing history.",
+    "filePaths": [],
+    "comments": "Added bonus features for extra credit.",
+    "submittedAt": "2025-01-12T09:15:00.000Z",
+    "grade": null,
+    "feedback": null,
+    "gradedAt": null
+  }
+]

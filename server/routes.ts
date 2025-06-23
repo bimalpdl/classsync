@@ -1,6 +1,6 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { memoryStorage as storage } from "./memoryStorage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { insertAssignmentSchema, insertSubmissionSchema } from "@shared/schema";
 import multer from "multer";

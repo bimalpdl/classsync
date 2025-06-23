@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "title": "Database Design Project",
+    "description": "Design and implement a complete database schema for a library management system. Include ER diagrams, normalization, and SQL queries.",
+    "subject": "database-systems",
+    "dueDate": "2025-01-15T23:59:00.000Z",
+    "maxMarks": 100,
+    "submissionType": "both",
+    "allowLateSubmission": true,
+    "teacherId": "teacher1",
+    "createdAt": "2025-06-23T09:31:36.578Z",
+    "updatedAt": "2025-06-23T09:31:36.578Z"
+  },
+  {
+    "id": 2,
+    "title": "Web Development Portfolio",
+    "description": "Create a responsive portfolio website using HTML, CSS, and JavaScript. Must include at least 5 projects with descriptions.",
+    "subject": "web-technology",
+    "dueDate": "2025-01-20T23:59:00.000Z",
+    "maxMarks": 80,
+    "submissionType": "file",
+    "allowLateSubmission": false,
+    "teacherId": "teacher1",
+    "createdAt": "2025-06-23T09:31:36.578Z",
+    "updatedAt": "2025-06-23T09:31:36.578Z"
+  },
+  {
+    "id": 3,
+    "title": "Data Structures Implementation",
+    "description": "Implement and compare the performance of different sorting algorithms (Bubble Sort, Quick Sort, Merge Sort) in C++.",
+    "subject": "data-structures",
+    "dueDate": "2025-01-10T23:59:00.000Z",
+    "maxMarks": 90,
+    "submissionType": "file",
+    "allowLateSubmission": true,
+    "teacherId": "teacher1",
+    "createdAt": "2025-06-23T09:31:36.578Z",
+    "updatedAt": "2025-06-23T09:31:36.578Z"
+  },
+  {
+    "id": 4,
+    "title": "Software Engineering Case Study",
+    "description": "Analyze a real-world software project failure and propose solutions using SDLC methodologies.",
+    "subject": "software-engineering",
+    "dueDate": "2025-01-25T23:59:00.000Z",
+    "maxMarks": 75,
+    "submissionType": "text",
+    "allowLateSubmission": false,
+    "teacherId": "teacher1",
+    "createdAt": "2025-06-23T09:31:36.578Z",
+    "updatedAt": "2025-06-23T09:31:36.578Z"
+  }
+]

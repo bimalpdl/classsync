@@ -7,25 +7,11 @@ services:
       - "5000:5000"
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=postgresql://postgres:password@db:5432/class_sync
       - SESSION_SECRET=your-super-secret-session-key-change-this-in-production
-    depends_on:
-      - db
     volumes:
       - uploads:/app/uploads
-
-  db:
-    image: postgres:15
-    environment:
-      - POSTGRES_DB=class_sync
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./migrations:/docker-entrypoint-initdb.d
+      - data:/app/data
 
 volumes:
-  postgres_data:
   uploads:
+  data:

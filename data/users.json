@@ -1,0 +1,46 @@
+[
+  {
+    "id": "teacher1",
+    "email": "teacher@patancampus.edu.np",
+    "firstName": "Ramesh",
+    "lastName": "Sharma",
+    "password": "password123",
+    "role": "teacher",
+    "profileImageUrl": null,
+    "createdAt": "2025-06-23T09:31:36.578Z",
+    "updatedAt": "2025-06-23T09:31:36.578Z"
+  },
+  {
+    "id": "student1",
+    "email": "niroj.thapa@student.patancampus.edu.np",
+    "firstName": "Niroj",
+    "lastName": "Thapa",
+    "password": "password123",
+    "role": "student",
+    "profileImageUrl": null,
+    "createdAt": "2025-06-23T09:31:36.578Z",
+    "updatedAt": "2025-06-23T09:31:36.578Z"
+  },
+  {
+    "id": "student2",
+    "email": "bimal.paudel@student.patancampus.edu.np",
+    "firstName": "Bimal",
+    "lastName": "Paudel",
+    "password": "password123",
+    "role": "student",
+    "profileImageUrl": null,
+    "createdAt": "2025-06-23T09:31:36.578Z",
+    "updatedAt": "2025-06-23T09:31:36.578Z"
+  },
+  {
+    "id": "student3",
+    "email": "priya.adhikari@student.patancampus.edu.np",
+    "firstName": "Priya",
+    "lastName": "Adhikari",
+    "password": "password123",
+    "role": "student",
+    "profileImageUrl": null,
+    "createdAt": "2025-06-23T09:31:36.578Z",
+    "updatedAt": "2025-06-23T09:31:36.578Z"
+  }
+]

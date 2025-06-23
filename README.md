@@ -22,8 +22,9 @@ A comprehensive academic collaboration platform for Nepali colleges featuring as
 ## Prerequisites
 
 - Node.js 18+ 
-- PostgreSQL database
 - npm or yarn
+
+**No database required!** The application uses JSON file storage for complete self-dependency.
 
 ## Local Development Setup
 
@@ -40,15 +41,12 @@ cd class-sync
 npm install
 ```
 
-### 3. Environment Setup
+### 3. Environment Setup (Optional)
 
-Create a `.env` file in the root directory:
+Create a `.env` file for custom configuration:
 
 ```env
-# Database
-DATABASE_URL=postgresql://username:password@localhost:5432/class_sync
-
-# Session Secret
+# Session Secret (Optional - has default)
 SESSION_SECRET=your-super-secret-session-key-here
 
 # Replit Auth (Optional - for production)
@@ -60,36 +58,15 @@ ISSUER_URL=https://replit.com/oidc
 NODE_ENV=development
 ```
 
-### 4. Database Setup
-
-#### Option A: Local PostgreSQL
-1. Install PostgreSQL on your machine
-2. Create a database: `createdb class_sync`
-3. Run migrations: `psql class_sync < migrations/0001_initial.sql`
-
-#### Option B: Online Database (Recommended)
-Use a cloud database service like:
-- [Neon](https://neon.tech) (Free tier available)
-- [Supabase](https://supabase.com) (Free tier available)
-- [Railway](https://railway.app) (Free tier available)
-
-### 5. Initialize Database with Sample Data
-
-```bash
-# Run the migration
-psql $DATABASE_URL -f migrations/0001_initial.sql
-
-# Or if using local PostgreSQL
-psql class_sync -f migrations/0001_initial.sql
-```
-
-### 6. Start Development Server
+### 4. Start Development Server
 
 ```bash
 npm run dev
 ```
 
 The application will be available at `http://localhost:5000`
+
+**Data Storage**: The app automatically creates a `data/` directory with JSON files to store all data. No database setup required!
 
 ## Demo Accounts
 
@@ -167,13 +144,13 @@ class-sync/
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
 
-## Database Schema
+## Data Storage
 
-The application uses these main tables:
-- `users` - User accounts (teachers and students)
-- `assignments` - Assignment details
-- `submissions` - Student submissions
-- `sessions` - User sessions
+The application uses JSON files for data persistence:
+- `data/users.json` - User accounts (teachers and students)
+- `data/assignments.json` - Assignment details
+- `data/submissions.json` - Student submissions
+- Memory store for user sessions
 
 ## File Upload
 
@@ -186,18 +163,17 @@ Files are stored in the `uploads/` directory. In production, consider using clou
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `DATABASE_URL` | PostgreSQL connection string | Yes |
-| `SESSION_SECRET` | Secret for session encryption | Yes |
+| `SESSION_SECRET` | Secret for session encryption | No (has default) |
 | `REPLIT_DOMAINS` | Domains for Replit Auth | No |
 | `REPL_ID` | Replit application ID | No |
 | `NODE_ENV` | Environment (development/production) | No |
 
 ## Troubleshooting
 
-### Database Connection Issues
-- Verify your `DATABASE_URL` is correct
-- Ensure PostgreSQL is running
-- Check firewall settings for remote databases
+### Data Storage Issues
+- Ensure the `data/` directory is writable
+- Check that JSON files aren't corrupted
+- Data files are created automatically on first run
 
 ### Authentication Issues
 - Make sure `SESSION_SECRET` is set

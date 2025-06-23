@@ -8,53 +8,36 @@ if ! command -v node &> /dev/null; then
     exit 1
 fi
 
-# Check if PostgreSQL is installed
-if ! command -v psql &> /dev/null; then
-    echo "⚠️  PostgreSQL is not installed. You'll need a database connection."
-    echo "   Consider using a cloud database like Neon, Supabase, or Railway."
-fi
+# No database required!
+echo "✅ No database setup needed - using JSON file storage"
 
 # Install dependencies
 echo "📦 Installing dependencies..."
 npm install
 
-# Copy environment file
+# Copy environment file (optional)
 if [ ! -f .env ]; then
-    echo "📋 Creating environment file..."
+    echo "📋 Creating environment file (optional)..."
     cp .env.example .env
-    echo "✅ Please edit .env file with your database credentials"
+    echo "✅ Environment file created (you can customize SESSION_SECRET if needed)"
 else
     echo "✅ Environment file already exists"
 fi
 
-# Create uploads directory
-mkdir -p uploads
-echo "📁 Created uploads directory"
+# Create directories
+mkdir -p uploads data
+echo "📁 Created uploads and data directories"
 
-# Check if database is accessible
-if [ -n "$DATABASE_URL" ]; then
-    echo "🗄️  Testing database connection..."
-    if psql "$DATABASE_URL" -c '\q' 2>/dev/null; then
-        echo "✅ Database connection successful"
-        
-        # Run migrations
-        echo "🔄 Running database migrations..."
-        psql "$DATABASE_URL" -f migrations/0001_initial.sql
-        echo "✅ Database setup complete"
-    else
-        echo "❌ Database connection failed. Please check your DATABASE_URL"
-    fi
-else
-    echo "⚠️  DATABASE_URL not set. Please configure your database in .env file"
-fi
+# Initialize data files
+echo "📊 Data will be automatically initialized on first run"
 
 echo ""
 echo "🎉 Setup complete! "
 echo ""
 echo "Next steps:"
-echo "1. Edit .env file with your database credentials"
-echo "2. Run 'npm run dev' to start the development server"
-echo "3. Open http://localhost:5000 in your browser"
+echo "1. Run 'npm run dev' to start the development server"
+echo "2. Open http://localhost:5000 in your browser"
+echo "3. Data will be stored in JSON files in the data/ directory"
 echo ""
 echo "Demo accounts:"
 echo "Teacher: teacher@patancampus.edu.np / password123"
