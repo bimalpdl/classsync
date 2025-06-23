@@ -114,7 +114,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="p-4 lg:p-8">
+    <div className="p-4 lg:p-8 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {statsConfig.map((stat, index) => (
           <Card key={index} className="bg-class-sync-surface rounded-2xl shadow-sm border border-gray-100">

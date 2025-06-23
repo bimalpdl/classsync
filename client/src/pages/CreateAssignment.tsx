@@ -115,7 +115,7 @@ export default function CreateAssignment() {
   }
 
   return (
-    <div className="p-4 lg:p-8">
+    <div className="p-4 lg:p-8 max-w-7xl mx-auto">
       <div className="max-w-4xl mx-auto">
         <Card className="bg-class-sync-surface rounded-2xl shadow-sm border border-gray-100">
           <CardContent className="p-6 lg:p-8">

@@ -63,7 +63,7 @@ export default function Assignments() {
   }
 
   return (
-    <div className="p-4 lg:p-8">
+    <div className="p-4 lg:p-8 max-w-7xl mx-auto">
       <div className="mb-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
           <h2 className="text-2xl font-bold text-class-sync-primary">All Assignments</h2>
@@ -83,7 +83,7 @@ export default function Assignments() {
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Status</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="pending">Pending</SelectItem>
                 <SelectItem value="submitted">Submitted</SelectItem>
                 <SelectItem value="graded">Graded</SelectItem>

@@ -10,7 +10,6 @@ import Dashboard from "@/pages/Dashboard";
 import CreateAssignment from "@/pages/CreateAssignment";
 import Assignments from "@/pages/Assignments";
 import Profile from "@/pages/Profile";
-import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 
 function Router() {
@@ -27,9 +26,8 @@ function Router() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar />
-      <main className="lg:ml-64 min-h-screen">
-        <Header />
+      <Header />
+      <main className="min-h-screen">
         <Switch>
           <Route path="/" component={Dashboard} />
           <Route path="/create-assignment" component={CreateAssignment} />

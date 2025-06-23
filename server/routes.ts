@@ -82,9 +82,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Assignment routes
-  app.get('/api/assignments', isAuthenticated, async (req: AuthenticatedRequest, res) => {
+  app.get('/api/assignments', async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.user?.claims.sub;
+      let userId = (req.session as any).userId || req.user?.claims?.sub;
       if (!userId) {
         return res.status(401).json({ message: "Unauthorized" });
       }
@@ -102,9 +102,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/assignments', isAuthenticated, upload.array('files'), async (req: AuthenticatedRequest, res) => {
+  app.post('/api/assignments', upload.array('files'), async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.user?.claims.sub;
+      let userId = (req.session as any).userId || req.user?.claims?.sub;
       if (!userId) {
         return res.status(401).json({ message: "Unauthorized" });
       }
@@ -133,7 +133,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/assignments/:id', isAuthenticated, async (req: AuthenticatedRequest, res) => {
+  app.get('/api/assignments/:id', async (req: AuthenticatedRequest, res) => {
     try {
       const assignmentId = parseInt(req.params.id);
       const assignment = await storage.getAssignmentById(assignmentId);
@@ -150,9 +150,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Submission routes
-  app.get('/api/assignments/:id/submissions', isAuthenticated, async (req: AuthenticatedRequest, res) => {
+  app.get('/api/assignments/:id/submissions', async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.user?.claims.sub;
+      let userId = (req.session as any).userId || req.user?.claims?.sub;
       const assignmentId = parseInt(req.params.id);
       
       if (!userId) {
@@ -172,9 +172,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/assignments/:id/submit', isAuthenticated, upload.array('files'), async (req: AuthenticatedRequest, res) => {
+  app.post('/api/assignments/:id/submit', upload.array('files'), async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.user?.claims.sub;
+      let userId = (req.session as any).userId || req.user?.claims?.sub;
       const assignmentId = parseInt(req.params.id);
       
       if (!userId) {
@@ -218,9 +218,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard stats
-  app.get('/api/dashboard/stats', isAuthenticated, async (req: AuthenticatedRequest, res) => {
+  app.get('/api/dashboard/stats', async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.user?.claims.sub;
+      let userId = (req.session as any).userId || req.user?.claims?.sub;
       if (!userId) {
         return res.status(401).json({ message: "Unauthorized" });
       }

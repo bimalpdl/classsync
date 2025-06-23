@@ -43,7 +43,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="p-4 lg:p-8">
+    <div className="p-4 lg:p-8 max-w-7xl mx-auto">
       <div className="max-w-4xl mx-auto space-y-6">
         <h2 className="text-2xl font-bold text-class-sync-primary">Profile</h2>
         
