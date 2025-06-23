@@ -7,9 +7,37 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { GraduationCap } from "lucide-react";
 
 export default function Landing() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    try {
+      const response = await fetch('/api/simple-login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        alert('Invalid credentials');
+      }
+    } catch (error) {
+      alert('Login failed');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleReplitLogin = () => {
     window.location.href = "/api/login";
   };
 
@@ -25,7 +53,7 @@ export default function Landing() {
             <p className="text-class-sync-secondary">Assignment Management System</p>
           </div>
 
-          <div className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <Label htmlFor="email" className="block text-sm font-medium text-class-sync-primary mb-2">
                 Email Address
@@ -33,8 +61,11 @@ export default function Landing() {
               <Input
                 type="email"
                 id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                required
               />
             </div>
 
@@ -45,8 +76,11 @@ export default function Landing() {
               <Input
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                required
               />
             </div>
 
@@ -61,30 +95,46 @@ export default function Landing() {
                   Remember me
                 </Label>
               </div>
-              <button className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
-                Forgot password?
-              </button>
             </div>
 
             <Button
-              onClick={handleLogin}
+              type="submit"
+              disabled={isLoading}
               className="w-full class-sync-primary font-medium py-3 px-4 rounded-lg transition-colors duration-200"
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </Button>
 
             <div className="text-center">
-              <p className="text-class-sync-secondary">
-                Don't have an account?{" "}
-                <button
-                  onClick={handleLogin}
-                  className="text-blue-600 hover:text-blue-800 font-medium"
-                >
-                  Sign up
-                </button>
-              </p>
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or</span>
+                </div>
+              </div>
             </div>
-          </div>
+
+            <Button
+              type="button"
+              onClick={handleReplitLogin}
+              variant="outline"
+              className="w-full border-gray-300 text-class-sync-primary hover:bg-gray-50 font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+            >
+              Sign in with Replit
+            </Button>
+
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-medium text-class-sync-primary mb-2">Demo Accounts:</h4>
+              <div className="text-sm space-y-1 text-class-sync-secondary">
+                <p><strong>Teacher:</strong> teacher@patancampus.edu.np / password123</p>
+                <p><strong>Student 1:</strong> niroj.thapa@student.patancampus.edu.np / password123</p>
+                <p><strong>Student 2:</strong> bimal.paudel@student.patancampus.edu.np / password123</p>
+                <p><strong>Student 3:</strong> priya.adhikari@student.patancampus.edu.np / password123</p>
+              </div>
+            </div>
+          </form>
         </CardContent>
       </Card>
     </div>

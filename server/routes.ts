@@ -22,21 +22,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
+  // Simple login for testing
+  app.post('/api/simple-login', async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      const user = await storage.getUserByEmailAndPassword(email, password);
+      if (user) {
+        req.session.userId = user.id;
+        res.json({ success: true, user });
+      } else {
+        res.status(401).json({ message: "Invalid credentials" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Login failed" });
+    }
+  });
+
+  // Simple logout
+  app.post('/api/simple-logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(500).json({ message: "Logout failed" });
+      } else {
+        res.json({ success: true });
+      }
+    });
+  });
+
   // Ensure uploads directory exists
   if (!fs.existsSync("uploads")) {
     fs.mkdirSync("uploads", { recursive: true });
   }
 
   // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: AuthenticatedRequest, res) => {
+  app.get('/api/auth/user', async (req: AuthenticatedRequest, res) => {
     try {
-      const userId = req.user?.claims.sub;
-      if (!userId) {
-        return res.status(401).json({ message: "Unauthorized" });
+      // Check session first
+      if ((req.session as any).userId) {
+        const user = await storage.getUser((req.session as any).userId);
+        if (user) {
+          return res.json(user);
+        }
       }
       
-      const user = await storage.getUser(userId);
-      res.json(user);
+      // Fallback to Replit auth
+      if (req.user?.claims?.sub) {
+        const user = await storage.getUser(req.user.claims.sub);
+        if (user) {
+          return res.json(user);
+        }
+      }
+      
+      res.status(401).json({ message: "Unauthorized" });
     } catch (error) {
       console.error("Error fetching user:", error);
       res.status(500).json({ message: "Failed to fetch user" });
