@@ -1,76 +1,50 @@
-# Class Sync - Assignment Management System
+# Class Sync - Standalone Assignment Management
 
-A comprehensive academic collaboration platform for Nepali colleges featuring assignment management built with the MERN stack.
+A self-contained academic collaboration platform for colleges featuring assignment management with zero external dependencies.
 
 ## Features
 
-- **User Authentication**: Role-based access for teachers and students
-- **Assignment Management**: Create, view, and manage assignments
-- **File Upload**: Support for assignment files and student submissions
-- **Dashboard**: Statistics and progress tracking
-- **Responsive Design**: Works on desktop and mobile devices
+- **Zero Setup**: No database, no configuration files needed
+- **Role-based Access**: Teachers create assignments, students submit work  
+- **File Upload**: Documents, images, and project files
+- **Dashboard**: Progress tracking and statistics
+- **Responsive Design**: Works on all devices
+- **Portable**: Copy folder and run anywhere
 
 ## Tech Stack
 
-- **Frontend**: React, TypeScript, Tailwind CSS, Vite
-- **Backend**: Node.js, Express.js, TypeScript
-- **Database**: PostgreSQL (Neon)
-- **Authentication**: Replit Auth + Simple Login
-- **File Upload**: Multer
-- **UI Components**: shadcn/ui
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express.js
+- **Storage**: JSON files (no database)
+- **Sessions**: Memory-based
+- **File Upload**: Local storage
 
-## Prerequisites
+## Quick Start
 
-- Node.js 18+ 
-- npm or yarn
+1. **Download and Install**
+   ```bash
+   git clone <repo-url>
+   cd class-sync
+   npm install
+   ```
 
-**No database required!** The application uses JSON file storage for complete self-dependency.
+2. **Run Application**
+   ```bash
+   npm run dev
+   ```
 
-## Local Development Setup
+3. **Access Application**
+   Open `http://localhost:5000` in your browser
 
-### 1. Clone the Repository
+## What Makes This Special
 
-```bash
-git clone <your-repo-url>
-cd class-sync
-```
+- **No Database**: Uses JSON files for data persistence
+- **No Configuration**: Works immediately after npm install
+- **Self-Contained**: All data stored locally in the project folder
+- **Portable**: Move the folder anywhere and it still works
+- **Educational Perfect**: Ideal for schools without IT infrastructure
 
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Environment Setup (Optional)
-
-Create a `.env` file for custom configuration:
-
-```env
-# Session Secret (Optional - has default)
-SESSION_SECRET=your-super-secret-session-key-here
-
-# Replit Auth (Optional - for production)
-REPLIT_DOMAINS=localhost:5000,your-domain.com
-REPL_ID=your-repl-id
-ISSUER_URL=https://replit.com/oidc
-
-# Development
-NODE_ENV=development
-```
-
-### 4. Start Development Server
-
-```bash
-npm run dev
-```
-
-The application will be available at `http://localhost:5000`
-
-**Data Storage**: The app automatically creates a `data/` directory with JSON files to store all data. No database setup required!
-
-## Demo Accounts
-
-For testing purposes, use these accounts:
+## Ready-to-Use Demo Accounts
 
 **Teacher Account:**
 - Email: `teacher@patancampus.edu.np`
@@ -81,121 +55,47 @@ For testing purposes, use these accounts:
 - Email: `bimal.paudel@student.patancampus.edu.np` / Password: `password123`
 - Email: `priya.adhikari@student.patancampus.edu.np` / Password: `password123`
 
-## Production Deployment
+## Data Storage
 
-### 1. Replit Deployment
-- Push your code to Replit
-- Set environment variables in Replit Secrets
-- Configure Replit Auth in your Replit account
-- The app will auto-deploy
+All your data is automatically saved in:
+- `data/users.json` - User accounts and profiles
+- `data/assignments.json` - All assignments and details
+- `data/submissions.json` - Student submissions and grades
+- `uploads/` - All uploaded files and documents
 
-### 2. Vercel Deployment
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Set environment variables in Vercel dashboard
-```
-
-### 3. Railway Deployment
-```bash
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Login and deploy
-railway login
-railway init
-railway up
-```
-
-### 4. Render Deployment
-1. Connect your GitHub repository to Render
-2. Set environment variables
-3. Deploy as a Web Service
-
-## Project Structure
+## File Structure
 
 ```
 class-sync/
 ├── client/                 # React frontend
 │   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Application pages
-│   │   ├── hooks/          # Custom React hooks
-│   │   └── lib/            # Utility functions
+│   │   ├── components/     # UI components
+│   │   ├── pages/          # App pages
+│   │   └── lib/            # Utilities
 ├── server/                 # Express backend
-│   ├── routes.ts           # API routes
-│   ├── storage.ts          # Database operations
-│   ├── db.ts              # Database connection
-│   └── replitAuth.ts      # Authentication
-├── shared/                 # Shared types and schemas
-│   └── schema.ts          # Database schema
-├── migrations/            # Database migrations
-└── uploads/              # File uploads (auto-created)
+│   ├── routes.ts           # API endpoints
+│   ├── memoryStorage.ts    # JSON file storage
+│   └── replitAuth.ts       # Authentication
+├── shared/                 # Shared types
+├── data/                   # JSON database files (auto-created)
+├── uploads/                # File uploads (auto-created)
+└── start-local.js          # Easy startup script
 ```
 
-## Available Scripts
+## Deployment
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+**Replit**: Just push the code - works instantly
+**Any Cloud Provider**: Upload folder and run `npm install && npm run dev`
+**Local Network**: Run locally and access from other devices on your network
 
-## Data Storage
+## Perfect For
 
-The application uses JSON files for data persistence:
-- `data/users.json` - User accounts (teachers and students)
-- `data/assignments.json` - Assignment details
-- `data/submissions.json` - Student submissions
-- Memory store for user sessions
-
-## File Upload
-
-Files are stored in the `uploads/` directory. In production, consider using cloud storage like:
-- AWS S3
-- Cloudinary
-- Google Cloud Storage
-
-## Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `SESSION_SECRET` | Secret for session encryption | No (has default) |
-| `REPLIT_DOMAINS` | Domains for Replit Auth | No |
-| `REPL_ID` | Replit application ID | No |
-| `NODE_ENV` | Environment (development/production) | No |
-
-## Troubleshooting
-
-### Data Storage Issues
-- Ensure the `data/` directory is writable
-- Check that JSON files aren't corrupted
-- Data files are created automatically on first run
-
-### Authentication Issues
-- Make sure `SESSION_SECRET` is set
-- Clear browser cookies and try again
-- Verify demo account credentials
-
-### File Upload Issues
-- Check that `uploads/` directory exists and is writable
-- Verify file size limits (25MB default)
-- Ensure proper file types are allowed
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
+- Educational institutions
+- Small teams and classrooms  
+- Quick demos and prototypes
+- Offline environments
+- Anyone wanting a hassle-free setup
 
 ## Support
 
-For issues and questions, please create an issue on the GitHub repository.
+This is a self-contained system designed to work out of the box. All data is stored locally in JSON files, making it completely portable and dependency-free.

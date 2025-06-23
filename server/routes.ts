@@ -1,10 +1,10 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { memoryStorage as storage } from "./memoryStorage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth } from "./replitAuth";
 import { insertAssignmentSchema, insertSubmissionSchema } from "@shared/schema";
 import multer from "multer";
-import path from "path";
+
 import fs from "fs";
 
 const upload = multer({
@@ -29,7 +29,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const user = await storage.getUserByEmailAndPassword(email, password);
       if (user) {
-        req.session.userId = user.id;
+        (req.session as any).userId = user.id;
         res.json({ success: true, user });
       } else {
         res.status(401).json({ message: "Invalid credentials" });
@@ -94,7 +94,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "User not found" });
       }
 
-      const assignments = await storage.getAssignments(user.role, userId);
+      const assignments = await storage.getAssignments(user.role || 'student', userId);
       res.json(assignments);
     } catch (error) {
       console.error("Error fetching assignments:", error);
@@ -230,7 +230,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "User not found" });
       }
 
-      const stats = await storage.getDashboardStats(user.role, userId);
+      const stats = await storage.getDashboardStats(user.role || 'student', userId);
       res.json(stats);
     } catch (error) {
       console.error("Error fetching dashboard stats:", error);
