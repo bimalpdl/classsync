@@ -88,3 +88,12 @@ export const insertSubmissionSchema = z.object({
   filePaths: z.array(z.string()).optional().default([]),
   comments: z.string().optional(),
 });
+
+// User registration schema
+export const insertUserSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  role: z.enum(['teacher', 'student']),
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+});

@@ -248,6 +248,11 @@ class MemoryStorage {
     return this.data.users.find(user => user.email === email && user.password === password);
   }
 
+  // Get user by email only (for registration duplicate check)
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return this.data.users.find(user => user.email === email);
+  }
+
   // Assignment operations
   async getAssignments(userRole: string, userId: string): Promise<Assignment[]> {
     if (userRole === 'teacher') {
@@ -267,6 +272,8 @@ class MemoryStorage {
     const newAssignment: Assignment = {
       ...assignment,
       id: maxId + 1,
+      description: assignment.description ?? null,
+      allowLateSubmission: assignment.allowLateSubmission ?? false,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -299,6 +306,9 @@ class MemoryStorage {
     const newSubmission: Submission = {
       ...submission,
       id: maxId + 1,
+      submissionText: submission.submissionText ?? null,
+      filePaths: submission.filePaths ?? [],
+      comments: submission.comments ?? null,
       submittedAt: new Date(),
       grade: null,
       feedback: null,

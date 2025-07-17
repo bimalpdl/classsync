@@ -42,5 +42,27 @@
     "profileImageUrl": null,
     "createdAt": "2025-06-23T09:31:36.578Z",
     "updatedAt": "2025-06-23T09:31:36.578Z"
+  },
+  {
+    "id": "student-1752765321275",
+    "email": "me.root000@gmail.com",
+    "password": "HelloThere",
+    "role": "student",
+    "firstName": "Bimal",
+    "lastName": "Paudel",
+    "profileImageUrl": null,
+    "createdAt": "2025-07-17T15:15:21.275Z",
+    "updatedAt": "2025-07-17T15:15:21.275Z"
+  },
+  {
+    "id": "student-1752765439182",
+    "email": "me.root@gmail.com",
+    "password": "HelloThere000",
+    "role": "student",
+    "firstName": "Bimal",
+    "lastName": "Paudel",
+    "profileImageUrl": null,
+    "createdAt": "2025-07-17T15:17:19.182Z",
+    "updatedAt": "2025-07-17T15:17:19.182Z"
   }
 ]

@@ -2,7 +2,7 @@ import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { memoryStorage as storage } from "./memoryStorage";
 import { setupAuth } from "./replitAuth";
-import { insertAssignmentSchema, insertSubmissionSchema } from "@shared/schema";
+import { insertAssignmentSchema, insertSubmissionSchema, insertUserSchema } from "@shared/schema";
 import multer from "multer";
 
 import fs from "fs";
@@ -22,6 +22,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
+  // User registration endpoint
+  app.post('/api/register', async (req, res) => {
+    try {
+      const data = insertUserSchema.parse(req.body);
+      // Check for duplicate email
+      const existing = await storage.getUserByEmail(data.email);
+      if (existing) {
+        return res.status(409).json({ message: 'User with this email already exists' });
+      }
+      // Generate a unique user id
+      const userId = `${data.role}-${Date.now()}`;
+      const user = await storage.upsertUser({
+        id: userId,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        profileImageUrl: null,
+      });
+      // Remove password from response
+      const { password, ...userWithoutPassword } = user;
+      res.status(201).json(userWithoutPassword);
+    } catch (error: any) {
+      res.status(400).json({ message: 'Invalid registration data', error: error.message });
+    }
+  });
+
   // Simple login for testing
   app.post('/api/simple-login', async (req, res) => {
     try {
@@ -39,15 +67,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Simple logout
-  app.post('/api/simple-logout', (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        res.status(500).json({ message: "Logout failed" });
-      } else {
-        res.json({ success: true });
+  // Unified logout endpoint for both OIDC and session users
+  app.post('/api/logout', async (req, res) => {
+    // Helper to send a consistent JSON response
+    const sendSuccess = () => res.json({ success: true });
+    const sendError = (message: string) => res.status(500).json({ success: false, message });
+
+    // Passport/oidc logout (if available)
+    if (typeof req.logout === 'function') {
+      try {
+        // Passport 0.6+ supports async/callback logout
+        await new Promise<void>((resolve, reject) => {
+          req.logout((err: any) => {
+            if (err) return reject(err);
+            resolve();
+          });
+        });
+      } catch (err: any) {
+        return sendError('OIDC logout failed');
       }
-    });
+    }
+
+    // Destroy session (for both OIDC and simple login)
+    if (req.session) {
+      req.session.destroy((err) => {
+        if (err) return sendError('Session destruction failed');
+        sendSuccess();
+      });
+    } else {
+      sendSuccess();
+    }
   });
 
   // Ensure uploads directory exists
