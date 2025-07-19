@@ -64,5 +64,27 @@
     "profileImageUrl": null,
     "createdAt": "2025-07-17T15:17:19.182Z",
     "updatedAt": "2025-07-17T15:17:19.182Z"
+  },
+  {
+    "id": "student-1752928909520",
+    "email": "iamrooot@proton.me",
+    "password": "HelloThere",
+    "role": "student",
+    "firstName": "Bimal",
+    "lastName": "Paudel",
+    "profileImageUrl": null,
+    "createdAt": "2025-07-19T12:41:49.520Z",
+    "updatedAt": "2025-07-19T12:41:49.520Z"
+  },
+  {
+    "id": "student-1752934779808",
+    "email": "me.bimal@proton.me",
+    "password": "HelloThere",
+    "role": "student",
+    "firstName": "Bimal",
+    "lastName": "Laudel",
+    "profileImageUrl": null,
+    "createdAt": "2025-07-19T14:19:39.808Z",
+    "updatedAt": "2025-07-19T14:19:39.808Z"
   }
 ]

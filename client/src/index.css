@@ -26,7 +26,7 @@
   
   /* Custom colors for Class Sync */
   --class-sync-primary: hsl(207, 90%, 54%);
-  --class-sync-primary-dark: hsl(213, 90%, 50%);
+  --class-sync-primary-dark: hsl(213, 90%, 45%);
   --class-sync-secondary: hsl(122, 39%, 49%);
   --class-sync-accent: hsl(33, 100%, 50%);
   --class-sync-error: hsl(0, 74%, 42%);
@@ -73,26 +73,66 @@
 @layer utilities {
   .class-sync-primary {
     background-color: var(--class-sync-primary);
-    color: var(--class-sync-surface);
+    color: white;
   }
   
   .class-sync-primary:hover {
     background-color: var(--class-sync-primary-dark);
+    color: white;
+  }
+  
+  /* Override default button hover for class-sync-primary buttons */
+  button.class-sync-primary:hover {
+    background-color: var(--class-sync-primary-dark) !important;
+    color: white !important;
   }
   
   .class-sync-secondary {
     background-color: var(--class-sync-secondary);
-    color: var(--class-sync-surface);
+    color: white;
+  }
+  
+  .class-sync-secondary:hover {
+    background-color: hsl(122, 39%, 40%);
+    color: white;
+  }
+  
+  /* Override default button hover for class-sync-secondary buttons */
+  button.class-sync-secondary:hover {
+    background-color: hsl(122, 39%, 40%) !important;
+    color: white !important;
   }
   
   .class-sync-accent {
     background-color: var(--class-sync-accent);
-    color: var(--class-sync-surface);
+    color: white;
+  }
+  
+  .class-sync-accent:hover {
+    background-color: hsl(33, 100%, 45%);
+    color: white;
+  }
+  
+  /* Override default button hover for class-sync-accent buttons */
+  button.class-sync-accent:hover {
+    background-color: hsl(33, 100%, 45%) !important;
+    color: white !important;
   }
   
   .class-sync-error {
     background-color: var(--class-sync-error);
-    color: var(--class-sync-surface);
+    color: white;
+  }
+  
+  .class-sync-error:hover {
+    background-color: hsl(0, 74%, 35%);
+    color: white;
+  }
+  
+  /* Override default button hover for class-sync-error buttons */
+  button.class-sync-error:hover {
+    background-color: hsl(0, 74%, 35%) !important;
+    color: white !important;
   }
   
   .text-class-sync-primary {

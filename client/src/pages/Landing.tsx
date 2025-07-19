@@ -47,10 +47,6 @@ export default function Landing() {
     }
   };
 
-  const handleReplitLogin = () => {
-    window.location.href = "/api/login";
-  };
-
   const handleSignUpChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
   };
@@ -172,26 +168,6 @@ export default function Landing() {
                   New here? Create an account
                 </Button>
               </div>
-
-              <div className="text-center">
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300"></div>
-                  </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">Or</span>
-                  </div>
-                </div>
-              </div>
-
-              <Button
-                type="button"
-                onClick={handleReplitLogin}
-                variant="outline"
-                className="w-full border-gray-300 text-class-sync-primary hover:bg-gray-50 font-medium py-3 px-4 rounded-lg transition-colors duration-200"
-              >
-                Sign in with Replit
-              </Button>
 
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h4 className="font-medium text-class-sync-primary mb-2">Demo Accounts:</h4>
