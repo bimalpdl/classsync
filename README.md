@@ -1,10 +1,10 @@
-# Class Sync - Standalone Assignment Management
+# Class Sync - SQLite Database Assignment Management
 
-A self-contained academic collaboration platform for colleges featuring assignment management with zero external dependencies.
+A self-contained academic collaboration platform for colleges featuring assignment management with SQLite database storage.
 
 ## Features
 
-- **Zero Setup**: No database, no configuration files needed
+- **SQLite Database**: Robust relational database storage with ACID compliance
 - **Role-based Access**: Teachers create assignments, students submit work  
 - **File Upload**: Documents, images, and project files
 - **Dashboard**: Progress tracking and statistics
@@ -15,7 +15,7 @@ A self-contained academic collaboration platform for colleges featuring assignme
 
 - **Frontend**: React, TypeScript, Tailwind CSS
 - **Backend**: Node.js, Express.js
-- **Storage**: JSON files (no database)
+- **Database**: SQLite with better-sqlite3
 - **Sessions**: Memory-based
 - **File Upload**: Local storage
 
@@ -38,9 +38,9 @@ A self-contained academic collaboration platform for colleges featuring assignme
 
 ## What Makes This Special
 
-- **No Database**: Uses JSON files for data persistence
-- **No Configuration**: Works immediately after npm install
-- **Self-Contained**: All data stored locally in the project folder
+- **SQLite Database**: Uses robust relational database for data persistence
+- **No External Dependencies**: Self-contained with SQLite database file
+- **Data Integrity**: Foreign key constraints and ACID compliance
 - **Portable**: Move the folder anywhere and it still works
 - **Educational Perfect**: Ideal for schools without IT infrastructure
 
@@ -58,44 +58,83 @@ A self-contained academic collaboration platform for colleges featuring assignme
 ## Data Storage
 
 All your data is automatically saved in:
-- `data/users.json` - User accounts and profiles
-- `data/assignments.json` - All assignments and details
-- `data/submissions.json` - Student submissions and grades
+- `data/classsync.db` - SQLite database with all data
 - `uploads/` - All uploaded files and documents
+
+## Database Schema
+
+The application uses a relational database with three main tables:
+
+- **Users**: Teacher and student accounts with authentication
+- **Assignments**: Course assignments with metadata and due dates
+- **Submissions**: Student work submissions with grades and feedback
 
 ## File Structure
 
 ```
-class-sync/
+classsync/
 ├── client/                 # React frontend
-│   ├── src/
-│   │   ├── components/     # UI components
-│   │   ├── pages/          # App pages
-│   │   └── lib/            # Utilities
-├── server/                 # Express backend
-│   ├── routes.ts           # API endpoints
-│   ├── memoryStorage.ts    # JSON file storage
-│   └── replitAuth.ts       # Authentication
-├── shared/                 # Shared types
-├── data/                   # JSON database files (auto-created)
-├── uploads/                # File uploads (auto-created)
-└── start-local.js          # Easy startup script
+├── server/                 # Node.js backend
+│   ├── sqliteStorage.ts   # SQLite database operations
+│   ├── routes.ts          # API endpoints
+│   └── index.ts           # Server entry point
+├── data/
+│   └── classsync.db       # SQLite database file
+├── uploads/               # File uploads directory
+└── shared/                # Shared TypeScript types
 ```
+
+## Migration from JSON Files
+
+This application was migrated from JSON file storage to SQLite database. The migration provides:
+
+- **Better Performance**: Indexed queries vs file parsing
+- **Data Integrity**: Foreign key constraints and ACID compliance
+- **Scalability**: Handles larger datasets efficiently
+- **Concurrent Access**: Proper database locking
+
+See `SQLITE-MIGRATION.md` for detailed migration information.
+
+## Development
+
+### Database Operations
+```bash
+# View database contents
+sqlite3 data/classsync.db "SELECT * FROM users;"
+
+# Backup database
+cp data/classsync.db data/backup.db
+
+# Reset database (if needed)
+rm data/classsync.db && npm run dev
+```
+
+### API Endpoints
+- `GET /api/assignments` - List assignments
+- `POST /api/assignments` - Create assignment (teachers only)
+- `GET /api/dashboard/stats` - Dashboard statistics
+- `POST /api/simple-login` - User authentication
 
 ## Deployment
 
-**Replit**: Just push the code - works instantly
-**Any Cloud Provider**: Upload folder and run `npm install && npm run dev`
-**Local Network**: Run locally and access from other devices on your network
+### Local Network
+```bash
+# Edit server to bind to 0.0.0.0
+# Then access via your IP address from other devices
+```
 
-## Perfect For
-
-- Educational institutions
-- Small teams and classrooms  
-- Quick demos and prototypes
-- Offline environments
-- Anyone wanting a hassle-free setup
+### Cloud Deployment
+- **Replit**: Push code directly, works instantly
+- **Vercel**: Deploy with database file included
+- **Railway**: Supports SQLite databases
 
 ## Support
 
-This is a self-contained system designed to work out of the box. All data is stored locally in JSON files, making it completely portable and dependency-free.
+For issues or questions:
+1. Check the `SQLITE-MIGRATION.md` file for database details
+2. Verify the database file exists in `data/classsync.db`
+3. Check server logs for error messages
+
+## License
+
+MIT License - Feel free to use and modify for your educational needs.

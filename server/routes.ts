@@ -1,11 +1,14 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
-import { memoryStorage as storage } from "./memoryStorage";
+import SQLiteStorage from "./sqliteStorage";
 import { setupAuth } from "./replitAuth";
 import { insertAssignmentSchema, insertSubmissionSchema, insertUserSchema } from "@shared/schema";
 import multer from "multer";
 
 import fs from "fs";
+
+// Initialize SQLite storage
+const storage = new SQLiteStorage();
 
 const upload = multer({
   dest: "uploads/",
@@ -163,12 +166,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Only teachers can create assignments" });
       }
 
+      console.log('Request body:', req.body);
+      console.log('Request files:', req.files);
+      
+      // Validate that all required fields are present
+      const { title, description, subject, dueDate, maxMarks, submissionType, allowLateSubmission } = req.body;
+      
+      if (!title || !subject || !dueDate || !maxMarks || !submissionType) {
+        return res.status(400).json({ 
+          message: "Missing required fields", 
+          missing: {
+            title: !title,
+            subject: !subject,
+            dueDate: !dueDate,
+            maxMarks: !maxMarks,
+            submissionType: !submissionType
+          }
+        });
+      }
+
+      // Parse maxMarks as number
+      const parsedMaxMarks = parseInt(maxMarks);
+      if (isNaN(parsedMaxMarks)) {
+        return res.status(400).json({ message: "maxMarks must be a valid number" });
+      }
+
       const validatedData = insertAssignmentSchema.parse({
-        ...req.body,
-        dueDate: new Date(req.body.dueDate),
-        maxMarks: parseInt(req.body.maxMarks),
-        allowLateSubmission: req.body.allowLateSubmission === 'true',
+        title,
+        description: description || null,
+        subject,
+        dueDate,
+        maxMarks: parsedMaxMarks,
+        submissionType,
+        allowLateSubmission: allowLateSubmission === 'true',
       });
+
+      console.log('Validated data:', validatedData);
 
       const assignment = await storage.createAssignment({
         ...validatedData,
@@ -176,9 +209,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       res.status(201).json(assignment);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error creating assignment:", error);
-      res.status(500).json({ message: "Failed to create assignment" });
+      console.error("Error details:", error.message);
+      res.status(500).json({ message: "Failed to create assignment", error: error.message });
     }
   });
 

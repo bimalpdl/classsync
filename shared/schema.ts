@@ -75,7 +75,9 @@ export const insertAssignmentSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   subject: z.string().min(1),
-  dueDate: z.string().transform(str => new Date(str)),
+  dueDate: z.union([z.string(), z.date()]).transform(val => 
+    typeof val === 'string' ? new Date(val) : val
+  ),
   maxMarks: z.number().min(1),
   submissionType: z.enum(['file', 'text', 'both']),
   allowLateSubmission: z.boolean().optional().default(false),
